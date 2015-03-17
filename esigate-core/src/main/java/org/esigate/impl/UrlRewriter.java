@@ -20,6 +20,7 @@ import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.esigate.util.UriUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -191,8 +192,15 @@ public class UrlRewriter {
         while (m.find()) {
             LOG.trace("found match: {}", m);
             String url = input.subSequence(m.start(3) + 1, m.end(3) - 1).toString();
-            if (!url.isEmpty()) {
-                url = rewriteUrl(url, requestUrl, baseUrlParam, visibleBaseUrl, absolute);
+
+            // Browsers toletate urls with white spaces before or after
+            String trimmedUrl = StringUtils.trim(url);
+
+            // Don't rewrite empty urls or anchors
+            if (!trimmedUrl.isEmpty() && !trimmedUrl.startsWith("#")) {
+                url = rewriteUrl(trimmedUrl, requestUrl, baseUrlParam, visibleBaseUrl, absolute);
+            } else {
+                LOG.debug("url kept unchanged: [{}]", url);
             }
             url = url.replaceAll("\\$", "\\\\\\$"); // replace '$' -> '\$' as it
                                                     // denotes group
