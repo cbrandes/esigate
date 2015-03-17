@@ -22,7 +22,10 @@ import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.esigate.Driver;
+import org.esigate.Parameters;
 import org.esigate.authentication.GenericAuthentificationHandler;
+import org.esigate.cas.session.Service;
+import org.esigate.cas.session.SingleSignOutFilter;
 import org.esigate.http.IncomingRequest;
 import org.esigate.http.OutgoingRequest;
 import org.jasig.cas.client.authentication.AttributePrincipal;
@@ -42,6 +45,7 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
     private static final String SPRING_SECURITY_URL_PATTERN_PROPERTY = "springSecurityUrl";
 
     private String loginUrl;
+    private String remoteService;
     private boolean springSecurity;
     private String springSecurityUrl;
 
@@ -78,6 +82,8 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
             LOG.debug("Proxy ticket retrieved: " + casPrincipal.getName() + " for service: " + location + " : "
                     + casProxyTicket);
             if (casProxyTicket != null) {
+                Service service = new Service(remoteService, casProxyTicket);
+                SingleSignOutFilter.getSessionMappingStorage().addServiceForSessionId(request.getSessionId(), service);
                 if (resultLocation.indexOf("?") > 0) {
                     resultLocation = resultLocation + "&ticket=" + casProxyTicket + springRedirectParam;
                 } else {
@@ -95,7 +101,7 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
 
     /**
      * Prefix attribute to be driver specific
-     * 
+     *
      * @param driver
      * @param name
      * @return
@@ -124,6 +130,7 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
             springSecurity = false;
         }
         springSecurityUrl = properties.getProperty(SPRING_SECURITY_URL_PATTERN_PROPERTY);
+        remoteService = Parameters.REMOTE_URL_BASE.getValue(properties)[0];
     }
 
     @Override
