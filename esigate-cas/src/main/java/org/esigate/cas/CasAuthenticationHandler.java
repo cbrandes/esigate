@@ -40,12 +40,14 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
     // Configuration properties names
     protected static final String LOGIN_URL_PROPERTY = "casLoginUrl";
     protected static final String SECOND_REQUEST = "SECOND_REQUEST";
+    private static final String SINGLE_LOG_OUT = "singleLogOut";
     private static final String SPRING_SECURITY_PROPERTY = "isSpringSecurity";
 
     private static final String SPRING_SECURITY_URL_PATTERN_PROPERTY = "springSecurityUrl";
 
     private String loginUrl;
     private String remoteService;
+    private boolean singleLogOut;
     private boolean springSecurity;
     private String springSecurityUrl;
 
@@ -82,8 +84,11 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
             LOG.debug("Proxy ticket retrieved: " + casPrincipal.getName() + " for service: " + location + " : "
                     + casProxyTicket);
             if (casProxyTicket != null) {
-                Service service = new Service(remoteService, casProxyTicket);
-                SingleSignOutFilter.getSessionMappingStorage().addServiceForSessionId(request.getSessionId(), service);
+                if (singleLogOut) {
+                    Service service = new Service(remoteService, casProxyTicket);
+                    SingleSignOutFilter.getSessionMappingStorage().addServiceForSessionId(request.getSessionId(),
+                            service);
+                }
                 if (resultLocation.indexOf("?") > 0) {
                     resultLocation = resultLocation + "&ticket=" + casProxyTicket + springRedirectParam;
                 } else {
@@ -130,6 +135,13 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
             springSecurity = false;
         }
         springSecurityUrl = properties.getProperty(SPRING_SECURITY_URL_PATTERN_PROPERTY);
+
+        String singleLogOutString = properties.getProperty(SINGLE_LOG_OUT);
+        if (singleLogOutString != null) {
+            singleLogOut = Boolean.parseBoolean(singleLogOutString);
+        } else {
+            singleLogOut = false;
+        }
         remoteService = Parameters.REMOTE_URL_BASE.getValue(properties)[0];
     }
 

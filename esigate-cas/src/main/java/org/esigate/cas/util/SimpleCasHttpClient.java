@@ -1,20 +1,16 @@
 /*
- * Licensed to Jasig under one or more contributor license
- * agreements. See the NOTICE file distributed with this work
- * for additional information regarding copyright ownership.
- * Jasig licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file
- * except in compliance with the License.  You may obtain a
- * copy of the License at the following location:
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *   http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package org.esigate.cas.util;
 
@@ -36,11 +32,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
+ *
  * @author Scott Battaglia
+ * @author Cedric Brandes
+ *
  * @version $Revision$ $Date$
- * @since 3.1
+ * @since 5.0-beta-3
  */
-public final class HttpClient implements Serializable {
+public final class SimpleCasHttpClient implements Serializable {
 
     private static final class MessageSender implements Callable<Boolean> {
 
@@ -121,7 +120,7 @@ public final class HttpClient implements Serializable {
 
     private static ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(100);
 
-    private static final Logger log = LoggerFactory.getLogger(HttpClient.class);
+    private static final Logger log = LoggerFactory.getLogger(SimpleCasHttpClient.class);
 
     /** Unique Id for serialization. */
     private static final long serialVersionUID = -5306738686476129516L;

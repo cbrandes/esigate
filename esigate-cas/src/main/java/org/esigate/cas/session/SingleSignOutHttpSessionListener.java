@@ -1,7 +1,16 @@
 /*
- * Copyright 2007 The JA-SIG Collaborative. All rights reserved. See license
- * distributed with this file and available online at
- * http://www.ja-sig.org/products/cas/overview/license/index.html
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
  */
 package org.esigate.cas.session;
 
@@ -14,9 +23,9 @@ import javax.servlet.http.HttpSessionListener;
  * the programmatic removal of sessions.
  * <p>
  * Enables the CAS Single Sign out feature.
- * 
+ *
  * Scott Battaglia
- * 
+ *
  * @version $Revision$ Date$
  * @since 3.1
  */
@@ -25,7 +34,7 @@ public final class SingleSignOutHttpSessionListener implements HttpSessionListen
     /**
      * Obtains a {@link SessionMappingStorage} object. Assumes this method will always return the same instance of the
      * object. It assumes this because it generally lazily calls the method.
-     * 
+     *
      * @return the SessionMappingStorage
      */
     protected static SessionMappingStorage getSessionMappingStorage() {
