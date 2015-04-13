@@ -12,7 +12,7 @@
 	<artifactId>esigate</artifactId>
 	<packaging>pom</packaging>
 	<name>esigate</name>
-	<version>5.0-SNAPSHOT</version>
+	<version>5.1-SNAPSHOT</version>
 	<inceptionYear>2008</inceptionYear>
 	<mailingLists>
 		<mailingList>
@@ -47,9 +47,8 @@
 	<description>ESIGate - ESI reverse proxy, CMS integration, Remove
 		templating</description>
 	<issueManagement>
-		<system>MantisBT</system>
-		<url>https://sourceforge.net/apps/mantisbt/webassembletool/view_all_bug_page.php
-		</url>
+		<system>GitHub</system>
+		<url>https://github.com/esigate/esigate/issues</url>
 	</issueManagement>
 	<developers>
 		<developer>
