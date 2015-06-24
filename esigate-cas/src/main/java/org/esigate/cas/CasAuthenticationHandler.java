@@ -15,9 +15,6 @@
 
 package org.esigate.cas;
 
-import java.security.Principal;
-import java.util.Properties;
-
 import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -27,6 +24,9 @@ import org.esigate.util.HttpRequestHelper;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.Principal;
+import java.util.Properties;
 
 public class CasAuthenticationHandler extends GenericAuthentificationHandler {
 	public static final String DEFAULT_LOGIN_URL = "/login";
@@ -54,12 +54,15 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
 
 			if (springSecurity) {
 				String params = null;
+				/*
 				if (resultLocation.indexOf("?") != -1) {
 					params = resultLocation.substring(resultLocation.indexOf("?"));
 					LOG.debug("params: " + params.substring(1));
 				}
+				*/
 				if (springSecurityUrl != null && !"".equals(springSecurityUrl)) {
-					resultLocation = HttpRequestHelper.getBaseUrl(request) + springSecurityUrl + ((params != null) ? params : "");
+					//resultLocation = HttpRequestHelper.getBaseUrl(request) + springSecurityUrl + ((params != null) ? params : "");
+					resultLocation = HttpRequestHelper.getBaseUrl(request) + springSecurityUrl;
 					springRedirectParam = "&spring-security-redirect=" + location;
 					LOG.debug("getIsSpringSecurity=true => updated location: " + resultLocation);
 				}
