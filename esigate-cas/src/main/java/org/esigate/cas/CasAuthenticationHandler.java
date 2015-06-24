@@ -15,9 +15,6 @@
 
 package org.esigate.cas;
 
-import java.security.Principal;
-import java.util.Properties;
-
 import org.apache.http.Header;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
@@ -31,6 +28,9 @@ import org.esigate.http.OutgoingRequest;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.security.Principal;
+import java.util.Properties;
 
 public class CasAuthenticationHandler extends GenericAuthentificationHandler {
     private static final String DEFAULT_LOGIN_URL = "/login";
@@ -68,9 +68,11 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
                 }
                 if (springSecurityUrl != null && !"".equals(springSecurityUrl)) {
                     resultLocation = outgoingRequest.getBaseUrl() + springSecurityUrl;
-                    if (params != null) {
+                    //AG2R found an error with springsecurity
+                    /* if (params != null) {
                         resultLocation = resultLocation + params;
                     }
+                    */
                     /*
                      * if (outgoingRequest.getContext().isProxy()) { springRedirectParam = "&spring-security-redirect="
                      * + request.getRequestLine().getUri(); } else { springRedirectParam = "&spring-security-redirect="
@@ -99,7 +101,6 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
         outgoingRequest.setUri(resultLocation);
     }
 
-    @Override
     public boolean beforeProxy(HttpRequest request) {
         return true;
     }
@@ -145,9 +146,8 @@ public class CasAuthenticationHandler extends GenericAuthentificationHandler {
         remoteService = Parameters.REMOTE_URL_BASE.getValue(properties)[0];
     }
 
-    @Override
     public boolean needsNewRequest(HttpResponse httpResponse, OutgoingRequest outgoingRequest,
-            IncomingRequest incomingRequest) {
+                                   IncomingRequest incomingRequest) {
         String secondRequestAttribute =
                 driverSpecificName(outgoingRequest.getOriginalRequest().getDriver(), SECOND_REQUEST);
         Boolean secondRequest = incomingRequest.getAttribute(secondRequestAttribute);
