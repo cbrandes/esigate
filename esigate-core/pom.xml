@@ -5,7 +5,7 @@
 	<parent>
 		<artifactId>esigate</artifactId>
 		<groupId>org.esigate</groupId>
-		<version>4.4-SNAPSHOT</version>
+		<version>4.5-SNAPSHOT</version>
 	</parent>
 	<repositories>
 		<repository>
@@ -69,9 +69,9 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
-			<groupId>spy</groupId>
-			<artifactId>memcached</artifactId>
-			<version>2.5</version>
+			<groupId>net.spy</groupId>
+			<artifactId>spymemcached</artifactId>
+			<version>2.10.3</version>
 			<scope>compile</scope>
 			<optional>true</optional>
 		</dependency>
